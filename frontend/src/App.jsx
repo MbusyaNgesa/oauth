@@ -28,6 +28,7 @@ const App = () => {
         color="bg-indigo-400"
         size="w-32 h-32"
         top="40%"
+        g
         left="-10%"
         delay={2}
       />
