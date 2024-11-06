@@ -1,12 +1,13 @@
 import { motion } from "framer-motion";
 import { Input } from "../components";
-import { Lock, Mail } from "lucide-react";
+import { Loader, Lock, Mail } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const isLoading = false;
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -51,8 +52,27 @@ const LoginPage = () => {
               Forgot Password
             </Link>
           </div>
+          <motion.button
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            className="
+						w-full py-3 px-4 bg-gradient-to-r
+             from-blue-400 to-indigo-600 text-white
+              font-bold rounded-lg shadow-lg hover:from-indigo-600 
+               focus:outline-none focus:ring-2  focus:ring-offset-gray-900
+                transition duration-200"
+            type="submit"
+            disabled={isLoading}
+          >
+            {isLoading ? (
+              <Loader className="w-6 h-6 animate-spin mx-auto" />
+            ) : (
+              "Login"
+            )}
+          </motion.button>
         </form>
       </div>
+
       <div
         className="px-8 py-4 bg-indigp-500 bg-opacity-50
       flex justify-center"

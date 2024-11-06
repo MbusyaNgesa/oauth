@@ -61,7 +61,7 @@ const SignupPage = () => {
           className="mt-5 w-full py-3 px-4 
         bg-gradient-to-r from-blue-400 to-indigo-600 text-white
         font-bold rounded-lg shadow-lg hover:from-indigo-600
-        focus:ring-offset-gray-600 transition duration-200
+        focus:ring-offset-gray-600 focus:ring-2 transition duration-200
         "
           whileHover={{ scale: 1.02 }}
           whileTop={{ scale: 0.98 }}
