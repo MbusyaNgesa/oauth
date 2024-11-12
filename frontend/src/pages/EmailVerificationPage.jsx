@@ -7,8 +7,24 @@ const EmailVerificationPage = () => {
   const inputRefs = useRef([]);
   const navigate = useNavigate();
 
-  const handleChange = (index, value) => {};
-  const handleKeyDown = (index, e) => {};
+  const handleChange = (index, value) => {
+    const newCode = [...code];
+
+    //Handle pasted content
+    if (value.length > 1) {
+      const pastedCode = value.slice(0, 6).split("");
+      for (let i = 0; i < 6; i++) {
+        newCode[i] = pastedCode[i] || "";
+      }
+      setCode(newCode);
+    }
+  };
+
+  const handleKeyDown = (index, e) => {
+    if (e.key === "Backspace" && !code[index] && index > 0) {
+      inputRefs.current[index - 1].focus();
+    }
+  };
   const isLoading = false;
 
   return (
