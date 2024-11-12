@@ -1,7 +1,7 @@
 import React from "react";
 import { FloatingShape } from "./components";
 import { Route, Routes } from "react-router-dom";
-import { SignupPage, LoginPage } from "./pages";
+import { SignupPage, LoginPage, EmailVerificationPage } from "./pages";
 
 const App = () => {
   return (
@@ -37,6 +37,7 @@ const App = () => {
         <Route path="/" element={"Home"} />
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/verify-email" element={<EmailVerificationPage />} />
       </Routes>
     </div>
   );
