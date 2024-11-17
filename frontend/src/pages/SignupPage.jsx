@@ -1,16 +1,27 @@
 import { motion } from "framer-motion";
 import { Input, PasswordStrengthMeter } from "../components/index";
-import { Lock, Mail, User } from "lucide-react";
+import { Loader, Lock, Mail, User } from "lucide-react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuthStore } from "../store/authStore";
 
 const SignupPage = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
-  const handleSignup = (e) => {
+  const { signup, error, isLoading } = useAuthStore();
+
+  const handleSignup = async (e) => {
     e.preventDefault();
+
+    try {
+      await signup(email, password, name);
+      navigate("/verify-email");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -54,21 +65,27 @@ const SignupPage = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-        </form>
+          {error && <p className="text-red-500 font-semibold mt-2">{error} </p>}
 
-        <PasswordStrengthMeter password={password} />
-        <motion.button
-          className="mt-5 w-full py-3 px-4 
+          <PasswordStrengthMeter password={password} />
+          <motion.button
+            className="mt-5 w-full py-3 px-4 
         bg-gradient-to-r from-blue-400 to-indigo-600 text-white
         font-bold rounded-lg shadow-lg hover:from-indigo-600
         focus:ring-offset-gray-600 focus:ring-2 transition duration-200
         "
-          whileHover={{ scale: 1.02 }}
-          whileTop={{ scale: 0.98 }}
-          type="submit"
-        >
-          Sign Up
-        </motion.button>
+            whileHover={{ scale: 1.02 }}
+            whileTop={{ scale: 0.98 }}
+            type="submit"
+            disabled={isLoading}
+          >
+            {isLoading ? (
+              <Loader className=" animate-spin mx-auto" size={24} />
+            ) : (
+              " Sign Up"
+            )}
+          </motion.button>
+        </form>
       </div>
       <div
         className="px-8 py-4 bg-indigp-500 bg-opacity-50
