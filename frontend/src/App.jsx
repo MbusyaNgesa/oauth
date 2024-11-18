@@ -1,10 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { FloatingShape } from "./components";
 import { Route, Routes } from "react-router-dom";
 import { SignupPage, LoginPage, EmailVerificationPage } from "./pages";
 import { Toaster } from "react-hot-toast";
+import { useAuthStore } from "./store/authStore";
 
 const App = () => {
+  const { checkAuth, isAuthenticated, isCheckingAuth, user } = useAuthStore();
+  useEffect(() => {
+    checkAuth();
+  }, [checkAuth]);
+  console.log(isAuthenticated);
+  console.log(user);
+
   return (
     <div
       className="min-h-screen bg-gradient-to-br 
