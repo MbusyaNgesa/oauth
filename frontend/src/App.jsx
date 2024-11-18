@@ -1,9 +1,18 @@
 import React, { useEffect } from "react";
 import { FloatingShape } from "./components";
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import { SignupPage, LoginPage, EmailVerificationPage } from "./pages";
 import { Toaster } from "react-hot-toast";
 import { useAuthStore } from "./store/authStore";
+
+//redirecting authenticated user to homepage
+const RedirectAuthenticatedUser = ({ children }) => {
+  const { isAuthenticated, user } = useAuthStore();
+  if (isAuthenticated && user.isVerified) {
+    return <Navigate to="/" replace />;
+  }
+  return children;
+};
 
 const App = () => {
   const { checkAuth, isAuthenticated, isCheckingAuth, user } = useAuthStore();
@@ -44,8 +53,22 @@ const App = () => {
 
       <Routes>
         <Route path="/" element={"Home"} />
-        <Route path="/signup" element={<SignupPage />} />
-        <Route path="/login" element={<LoginPage />} />
+        <Route
+          path="/signup"
+          element={
+            <RedirectAuthenticatedUser>
+              <SignupPage />
+            </RedirectAuthenticatedUser>
+          }
+        />
+        <Route
+          path="/login"
+          element={
+            <RedirectAuthenticatedUser>
+              <LoginPage />
+            </RedirectAuthenticatedUser>
+          }
+        />
         <Route path="/verify-email" element={<EmailVerificationPage />} />
       </Routes>
       <Toaster />
