@@ -5,6 +5,18 @@ import { SignupPage, LoginPage, EmailVerificationPage } from "./pages";
 import { Toaster } from "react-hot-toast";
 import { useAuthStore } from "./store/authStore";
 
+//protecting routes that require authentication
+const ProtectedRoute = ({ children }) => {
+  const { isAuthenticated, user } = useAuthStore();
+  if (!isAuthenticated) {
+    return <Navigate to="login" replace />;
+  }
+  if (!user.isVerified) {
+    return <Navigate to="verify-email" replace />;
+  }
+  return children;
+};
+
 //redirecting authenticated user to homepage
 const RedirectAuthenticatedUser = ({ children }) => {
   const { isAuthenticated, user } = useAuthStore();
