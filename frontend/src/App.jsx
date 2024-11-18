@@ -1,7 +1,12 @@
 import React, { useEffect } from "react";
 import { FloatingShape } from "./components";
 import { Navigate, Route, Routes } from "react-router-dom";
-import { SignupPage, LoginPage, EmailVerificationPage } from "./pages";
+import {
+  SignupPage,
+  LoginPage,
+  EmailVerificationPage,
+  DashboardPage,
+} from "./pages";
 import { Toaster } from "react-hot-toast";
 import { useAuthStore } from "./store/authStore";
 
@@ -64,7 +69,14 @@ const App = () => {
       />
 
       <Routes>
-        <Route path="/" element={"Home"} />
+        <Route
+          path="/"
+          element={
+            <ProtectedRoute>
+              <DashboardPage />
+            </ProtectedRoute>
+          }
+        />
         <Route
           path="/signup"
           element={
