@@ -2,6 +2,7 @@ import React from "react";
 import { FloatingShape } from "./components";
 import { Route, Routes } from "react-router-dom";
 import { SignupPage, LoginPage, EmailVerificationPage } from "./pages";
+import { Toaster } from "react-hot-toast";
 
 const App = () => {
   return (
@@ -39,6 +40,7 @@ const App = () => {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/verify-email" element={<EmailVerificationPage />} />
       </Routes>
+      <Toaster />
     </div>
   );
 };
